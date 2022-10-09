@@ -1,0 +1,125 @@
+Sub tickerresults()
+
+Dim i, j, k, stockrow As Integer
+Dim snames(6) As String
+Dim volume As Double
+Dim initialprice As Double
+Dim finalprice As Double
+Dim maxpercent, minpercent, maxvolume, percentchange As Double
+Dim maxpercentticker, minpercentticker, maxvolumeticker, tickername As String
+
+snames(1) = "A"
+snames(2) = "B"
+snames(3) = "C"
+snames(4) = "D"
+snames(5) = "E"
+snames(6) = "F"
+
+
+
+
+
+For i = 1 To 6
+
+  k = 2
+  stockrow = 2
+  maxpercent = 0
+  minpercent = 0
+  maxvolume = 0
+
+  Sheets(snames(i)).Cells(1, 9) = "Ticker"
+  Sheets(snames(i)).Cells(1, 10) = "Yearly Change"
+  Sheets(snames(i)).Cells(1, 11) = "Percent Change"
+  Sheets(snames(i)).Cells(1, 12) = "Total Stock Volume"
+  Sheets(snames(i)).Cells(1, 16) = "Ticker"
+  Sheets(snames(i)).Cells(1, 17) = "Value"
+  Sheets(snames(i)).Columns("J").ColumnWidth = 15
+  Sheets(snames(i)).Columns("K").ColumnWidth = 15
+  Sheets(snames(i)).Columns("L").ColumnWidth = 20
+  Sheets(snames(i)).Columns("O").ColumnWidth = 20
+  Sheets(snames(i)).Columns("Q").ColumnWidth = 15
+  Sheets(snames(i)).Cells(2, 15) = "Greatest % Increase"
+  Sheets(snames(i)).Cells(3, 15) = "Greatest % Decrease"
+  Sheets(snames(i)).Cells(4, 15) = "Greatest Total Volume"
+  
+  For j = 9 To 12
+      Sheets(snames(i)).Cells(1, j).HorizontalAlignment = xlCenter
+      Sheets(snames(i)).Cells(1, j).Font.Bold = True
+  Next j
+  
+  For j = 16 To 17
+      Sheets(snames(i)).Cells(1, j).HorizontalAlignment = xlCenter
+      Sheets(snames(i)).Cells(1, j).Font.Bold = True
+  Next j
+  
+  For j = 2 To 4
+      Sheets(snames(i)).Cells(j, 15).Font.Bold = True
+  Next j
+  
+  
+  While Sheets(snames(i)).Cells(k, 1) <> ""
+    
+    If Sheets(snames(i)).Cells(k, 1) <> Sheets(snames(i)).Cells(k - 1, 1) Then
+        initialprice = Sheets(snames(i)).Cells(k, 3)
+       ' MsgBox (initialprice)
+    End If
+    
+    If Sheets(snames(i)).Cells(k, 1) = Sheets(snames(i)).Cells(k + 1, 1) Then
+    
+        
+     volume = volume + Sheets(snames(i)).Cells(k, 7)
+        
+    Else
+        
+        tickername = Sheets(snames(i)).Cells(k, 1)
+        finalprice = Sheets(snames(i)).Cells(k, 6)
+       ' MsgBox (finalprice)
+        Sheets(snames(i)).Cells(stockrow, 9) = tickername
+        Sheets(snames(i)).Cells(stockrow, 10) = Round(finalprice - initialprice, 2)
+        Sheets(snames(i)).Cells(stockrow, 11) = FormatPercent(Round((finalprice - initialprice) / initialprice, 4))
+        Sheets(snames(i)).Cells(stockrow, 12) = volume
+        If Sheets(snames(i)).Cells(stockrow, 10) >= 0 Then
+            Sheets(snames(i)).Cells(stockrow, 10).Interior.ColorIndex = 3
+        Else
+            Sheets(snames(i)).Cells(stockrow, 10).Interior.ColorIndex = 4
+        End If
+        
+        percentchange = (finalprice - initialprice) / initialprice
+        
+        If (percentchange > maxpercent) Then
+            maxpercent = percentchange
+            maxpercentticker = tickername
+        End If
+        
+        If (percentchange < minpercent) Then
+            minpercent = percentchange
+            minpercentticker = tickername
+        End If
+        
+        If volume > maxvolume Then
+            maxvolume = volume
+            maxvolumeticker = tickername
+        End If
+             
+        volume = 0
+        stockrow = stockrow + 1
+        
+    End If
+          
+    k = k + 1
+    
+Wend
+
+Sheets(snames(i)).Cells(2, 16) = maxpercentticker
+Sheets(snames(i)).Cells(3, 16) = minpercentticker
+Sheets(snames(i)).Cells(4, 16) = maxvolumeticker
+
+Sheets(snames(i)).Cells(2, 17) = FormatPercent(Round(maxpercent, 4))
+Sheets(snames(i)).Cells(3, 17) = FormatPercent(Round(minpercent, 4))
+Sheets(snames(i)).Cells(4, 17) = maxvolume
+
+
+Next i
+      
+
+End Sub
