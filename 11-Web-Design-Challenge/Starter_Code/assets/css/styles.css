@@ -1,0 +1,64 @@
+#mainheader {
+    font-size: 52px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    color: blue;
+}
+
+#text1 {
+    font-size: 20px;
+    padding: 20px;
+    color: indigo;
+}
+
+#mainheader2 {
+    font-size: 36px;
+    text-align: left;
+    padding-top: 20px;
+    padding-left: 60px;
+    color: blue;
+}
+
+#mainheadercomparisons {
+    font-size: 62px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    color: blue;
+}
+
+#text2 {
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 10px;
+    color: blue;
+}
+
+.graphheader {
+    font-size: 36px;
+    text-align: center;
+    padding-top: 20px;
+    color: firebrick;
+}
+
+.mainheaders {
+    font-size: 52px;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    color: blue;
+}
+
+#textmaxtemperature {
+    text-align: left;
+    font-size: 24px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 40px;
+    color: forestgreen;
+}
+
+.current_image {
+    border: 5px solid violet;
+}
